@@ -1,0 +1,123 @@
+
+./main_stat:	file format mach-o arm64
+
+Disassembly of section __TEXT,__text:
+
+0000000100003dc4 <_main>:
+100003dc4: d100c3ff    	sub	sp, sp, #48
+100003dc8: a9027bfd    	stp	x29, x30, [sp, #32]
+100003dcc: 910083fd    	add	x29, sp, #32
+100003dd0: 52800008    	mov	w8, #0
+100003dd4: b9000be8    	str	w8, [sp, #8]
+100003dd8: b81fc3bf    	stur	wzr, [x29, #-4]
+100003ddc: b81f83a0    	stur	w0, [x29, #-8]
+100003de0: f9000be1    	str	x1, [sp, #16]
+100003de4: 90000000    	adrp	x0, 0x100003000 <_main+0x20>
+100003de8: 913de000    	add	x0, x0, #3960
+100003dec: 94000060    	bl	0x100003f6c <_scanf+0x100003f6c>
+100003df0: 910003e9    	mov	x9, sp
+100003df4: 910033e8    	add	x8, sp, #12
+100003df8: f9000128    	str	x8, [x9]
+100003dfc: 90000000    	adrp	x0, 0x100003000 <_main+0x38>
+100003e00: 913e5c00    	add	x0, x0, #3991
+100003e04: 94000057    	bl	0x100003f60 <_scanf+0x100003f60>
+100003e08: b9400fe0    	ldr	w0, [sp, #12]
+100003e0c: 52800c81    	mov	w1, #100
+100003e10: 94000024    	bl	0x100003ea0 <_test_collatz_conjecture>
+100003e14: 910003e9    	mov	x9, sp
+100003e18: aa0003e8    	mov	x8, x0
+100003e1c: f9000128    	str	x8, [x9]
+100003e20: 90000000    	adrp	x0, 0x100003000 <_main+0x5c>
+100003e24: 913e6800    	add	x0, x0, #3994
+100003e28: 94000051    	bl	0x100003f6c <_scanf+0x100003f6c>
+100003e2c: b9400be0    	ldr	w0, [sp, #8]
+100003e30: a9427bfd    	ldp	x29, x30, [sp, #32]
+100003e34: 9100c3ff    	add	sp, sp, #48
+100003e38: d65f03c0    	ret
+
+0000000100003e3c <_collatz_conjecture>:
+100003e3c: d10043ff    	sub	sp, sp, #16
+100003e40: b9000be0    	str	w0, [sp, #8]
+100003e44: b9400be8    	ldr	w8, [sp, #8]
+100003e48: 5280004a    	mov	w10, #2
+100003e4c: 1aca0d09    	sdiv	w9, w8, w10
+100003e50: 1b0a7d29    	mul	w9, w9, w10
+100003e54: 6b090108    	subs	w8, w8, w9
+100003e58: 71000108    	subs	w8, w8, #0
+100003e5c: 1a9f07e8    	cset	w8, ne
+100003e60: 370000e8    	tbnz	w8, #0, 0x100003e7c <_collatz_conjecture+0x40>
+100003e64: 14000001    	b	0x100003e68 <_collatz_conjecture+0x2c>
+100003e68: b9400be8    	ldr	w8, [sp, #8]
+100003e6c: 52800049    	mov	w9, #2
+100003e70: 1ac90d08    	sdiv	w8, w8, w9
+100003e74: b9000fe8    	str	w8, [sp, #12]
+100003e78: 14000007    	b	0x100003e94 <_collatz_conjecture+0x58>
+100003e7c: b9400be9    	ldr	w9, [sp, #8]
+100003e80: 52800068    	mov	w8, #3
+100003e84: 1b097d08    	mul	w8, w8, w9
+100003e88: 71000508    	subs	w8, w8, #1
+100003e8c: b9000fe8    	str	w8, [sp, #12]
+100003e90: 14000001    	b	0x100003e94 <_collatz_conjecture+0x58>
+100003e94: b9400fe0    	ldr	w0, [sp, #12]
+100003e98: 910043ff    	add	sp, sp, #16
+100003e9c: d65f03c0    	ret
+
+0000000100003ea0 <_test_collatz_conjecture>:
+100003ea0: d100c3ff    	sub	sp, sp, #48
+100003ea4: a9027bfd    	stp	x29, x30, [sp, #32]
+100003ea8: 910083fd    	add	x29, sp, #32
+100003eac: b81f83a0    	stur	w0, [x29, #-8]
+100003eb0: b81f43a1    	stur	w1, [x29, #-12]
+100003eb4: b85f83a8    	ldur	w8, [x29, #-8]
+100003eb8: b90013e8    	str	w8, [sp, #16]
+100003ebc: b9000fff    	str	wzr, [sp, #12]
+100003ec0: 14000001    	b	0x100003ec4 <_test_collatz_conjecture+0x24>
+100003ec4: b94013e8    	ldr	w8, [sp, #16]
+100003ec8: 71000508    	subs	w8, w8, #1
+100003ecc: 1a9f17e8    	cset	w8, eq
+100003ed0: 52800009    	mov	w9, #0
+100003ed4: b9000be9    	str	w9, [sp, #8]
+100003ed8: 37000108    	tbnz	w8, #0, 0x100003ef8 <_test_collatz_conjecture+0x58>
+100003edc: 14000001    	b	0x100003ee0 <_test_collatz_conjecture+0x40>
+100003ee0: b9400fe8    	ldr	w8, [sp, #12]
+100003ee4: b85f43a9    	ldur	w9, [x29, #-12]
+100003ee8: 6b090108    	subs	w8, w8, w9
+100003eec: 1a9fa7e8    	cset	w8, lt
+100003ef0: b9000be8    	str	w8, [sp, #8]
+100003ef4: 14000001    	b	0x100003ef8 <_test_collatz_conjecture+0x58>
+100003ef8: b9400be8    	ldr	w8, [sp, #8]
+100003efc: 36000128    	tbz	w8, #0, 0x100003f20 <_test_collatz_conjecture+0x80>
+100003f00: 14000001    	b	0x100003f04 <_test_collatz_conjecture+0x64>
+100003f04: b94013e0    	ldr	w0, [sp, #16]
+100003f08: 97ffffcd    	bl	0x100003e3c <_collatz_conjecture>
+100003f0c: b90013e0    	str	w0, [sp, #16]
+100003f10: b9400fe8    	ldr	w8, [sp, #12]
+100003f14: 11000508    	add	w8, w8, #1
+100003f18: b9000fe8    	str	w8, [sp, #12]
+100003f1c: 17ffffea    	b	0x100003ec4 <_test_collatz_conjecture+0x24>
+100003f20: b9400fe8    	ldr	w8, [sp, #12]
+100003f24: b85f43a9    	ldur	w9, [x29, #-12]
+100003f28: 6b090108    	subs	w8, w8, w9
+100003f2c: 1a9fa7e8    	cset	w8, lt
+100003f30: 370000a8    	tbnz	w8, #0, 0x100003f44 <_test_collatz_conjecture+0xa4>
+100003f34: 14000001    	b	0x100003f38 <_test_collatz_conjecture+0x98>
+100003f38: 12800008    	mov	w8, #-1
+100003f3c: b81fc3a8    	stur	w8, [x29, #-4]
+100003f40: 14000004    	b	0x100003f50 <_test_collatz_conjecture+0xb0>
+100003f44: b9400fe8    	ldr	w8, [sp, #12]
+100003f48: b81fc3a8    	stur	w8, [x29, #-4]
+100003f4c: 14000001    	b	0x100003f50 <_test_collatz_conjecture+0xb0>
+100003f50: b85fc3a0    	ldur	w0, [x29, #-4]
+100003f54: a9427bfd    	ldp	x29, x30, [sp, #32]
+100003f58: 9100c3ff    	add	sp, sp, #48
+100003f5c: d65f03c0    	ret
+
+Disassembly of section __TEXT,__stubs:
+
+0000000100003f60 <__stubs>:
+100003f60: b0000010    	adrp	x16, 0x100004000 <__stubs+0x4>
+100003f64: f9400210    	ldr	x16, [x16]
+100003f68: d61f0200    	br	x16
+100003f6c: b0000010    	adrp	x16, 0x100004000 <__stubs+0x10>
+100003f70: f9400610    	ldr	x16, [x16, #8]
+100003f74: d61f0200    	br	x16

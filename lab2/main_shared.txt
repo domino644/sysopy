@@ -1,0 +1,49 @@
+
+./main_shared:	file format mach-o arm64
+
+Disassembly of section __TEXT,__text:
+
+0000000100003ee4 <_main>:
+100003ee4: d100c3ff    	sub	sp, sp, #48
+100003ee8: a9027bfd    	stp	x29, x30, [sp, #32]
+100003eec: 910083fd    	add	x29, sp, #32
+100003ef0: 52800008    	mov	w8, #0
+100003ef4: b9000be8    	str	w8, [sp, #8]
+100003ef8: b81fc3bf    	stur	wzr, [x29, #-4]
+100003efc: b81f83a0    	stur	w0, [x29, #-8]
+100003f00: f9000be1    	str	x1, [sp, #16]
+100003f04: 90000000    	adrp	x0, 0x100003000 <_main+0x20>
+100003f08: 913e0000    	add	x0, x0, #3968
+100003f0c: 9400001a    	bl	0x100003f74 <_test_collatz_conjecture+0x100003f74>
+100003f10: 910003e9    	mov	x9, sp
+100003f14: 910033e8    	add	x8, sp, #12
+100003f18: f9000128    	str	x8, [x9]
+100003f1c: 90000000    	adrp	x0, 0x100003000 <_main+0x38>
+100003f20: 913e7c00    	add	x0, x0, #3999
+100003f24: 94000011    	bl	0x100003f68 <_test_collatz_conjecture+0x100003f68>
+100003f28: b9400fe0    	ldr	w0, [sp, #12]
+100003f2c: 52800c81    	mov	w1, #100
+100003f30: 9400000b    	bl	0x100003f5c <_test_collatz_conjecture+0x100003f5c>
+100003f34: 910003e9    	mov	x9, sp
+100003f38: aa0003e8    	mov	x8, x0
+100003f3c: f9000128    	str	x8, [x9]
+100003f40: 90000000    	adrp	x0, 0x100003000 <_main+0x5c>
+100003f44: 913e8800    	add	x0, x0, #4002
+100003f48: 9400000b    	bl	0x100003f74 <_test_collatz_conjecture+0x100003f74>
+100003f4c: b9400be0    	ldr	w0, [sp, #8]
+100003f50: a9427bfd    	ldp	x29, x30, [sp, #32]
+100003f54: 9100c3ff    	add	sp, sp, #48
+100003f58: d65f03c0    	ret
+
+Disassembly of section __TEXT,__stubs:
+
+0000000100003f5c <__stubs>:
+100003f5c: b0000010    	adrp	x16, 0x100004000 <__stubs+0x4>
+100003f60: f9400210    	ldr	x16, [x16]
+100003f64: d61f0200    	br	x16
+100003f68: b0000010    	adrp	x16, 0x100004000 <__stubs+0x10>
+100003f6c: f9400610    	ldr	x16, [x16, #8]
+100003f70: d61f0200    	br	x16
+100003f74: b0000010    	adrp	x16, 0x100004000 <__stubs+0x1c>
+100003f78: f9400a10    	ldr	x16, [x16, #16]
+100003f7c: d61f0200    	br	x16
