@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    unsigned int blocksize;
+    int blocksize;
     FILE *source = fopen(argv[1], "r");
     FILE *target = fopen(argv[2], "w");
 
@@ -45,7 +45,20 @@ int main(int argc, char *argv[])
     blocksize = atoi(argv[3]);
     char buffer[blocksize];
     fseek(source, 0, SEEK_END);
-    size_t read_bytes = fread(buffer, sizeof(char), blocksize, source);
-    printf("%s", buffer);
+    while (!fseek(source, -blocksize, SEEK_CUR))
+    {
+        size_t read_bytes = fread(buffer, sizeof(char), blocksize, source);
+        size_t written_bytes = fwrite(buffer, sizeof(char), read_bytes, target);
+        fseek(source, -blocksize, SEEK_CUR);
+    }
+    if (ftell(source) != 0)
+    {
+        long offset = ftell(source);
+        fseek(source, -offset, SEEK_CUR);
+        size_t read_bytes = fread(buffer, sizeof(char), offset, source);
+        size_t written_bytes = fwrite(buffer, sizeof(char), read_bytes, target);
+    }
+    fclose(source);
+    fclose(target);
     return 0;
 }
