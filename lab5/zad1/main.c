@@ -58,17 +58,25 @@ int main(int argc, char *argv[])
         sigaddset(&new_blocked_signals, SIGUSR1);
         if (sigprocmask(SIG_BLOCK, &new_blocked_signals, &old_blocked_signals) < 0)
             perror("Nie udało się zablokować sygnału");
-        struct sigaction act;
-        act.sa_handler = mask_handler;
-        sigemptyset(&act.sa_mask);
-        act.sa_flags = 0;
-        sigaction(SIGUSR1, &act, NULL);
     }
 
     if (raise(SIGUSR1) == -1)
     {
         perror("Error while sending signal");
         return 1;
+    }
+    sigset_t sig_pend;
+    if (sigpending(&sig_pend) != 0)
+    {
+        perror("sigpending error");
+    }
+    if (sigismember(&sig_pend, SIGUSR1))
+    {
+        printf("%d is pending\n", SIGUSR1);
+    }
+    else
+    {
+        printf("%d is not pending\n", SIGUSR1);
     }
     return 0;
 }
