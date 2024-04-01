@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <errno.h>
-#include <libc.h>
 #include <signal.h>
 #include <pthread.h>
 
@@ -43,7 +42,7 @@ int main(int argc, char *argv[])
         value.sival_int = action;
         if (sigqueue(PID, SIGUSR1, value) == -1)
         {
-            printf("Error with siqque, %d\n", errno);
+            printf("Error with sigque, %d\n", errno);
             return 1;
         }
         sigsuspend(&signals);

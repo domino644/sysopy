@@ -5,7 +5,8 @@
 #include <errno.h>
 #include <signal.h>
 #include <unistd.h>
-#include <libc.h>
+#include <sys/signal.h>
+#include <sys/wait.h>
 
 void handler(int signum, siginfo_t *info, void *context)
 {
@@ -19,8 +20,9 @@ int main(int argc, char *argv[])
     printf("Listening...\n");
 
     struct sigaction act;
-    act.__sigaction_u.__sa_sigaction = &handler;
+    act.sa_sigaction = &handler;
     sigemptyset(&act.sa_mask);
     act.sa_flags = 0;
     sigaction(SIGUSR1, &act, NULL);
+    while(1);
 }
