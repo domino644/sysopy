@@ -5,11 +5,10 @@
 #include <signal.h>
 #include <pthread.h>
 
-#define _XOPEN_SOURCE 500
-
 void handler(int signum)
 {
     printf("Received signal: %d\n", signum);
+    exit(0);
 }
 
 int main(int argc, char *argv[])
@@ -24,28 +23,16 @@ int main(int argc, char *argv[])
     union sigval value;
     value.sival_int = action;
 
+    signal(SIGUSR1, &handler);
+
     if (sigqueue(PID, SIGUSR1, value) == -1)
     {
         printf("Error with siqque, %d\n", errno);
         return 1;
     }
-    signal(SIGUSR1, handler);
 
     sigset_t signals;
     sigemptyset(&signals);
     sigaddset(&signals, SIGUSR1);
     sigsuspend(&signals);
-
-    while (1)
-    {
-        scanf("Action: %d", &action);
-        value.sival_int = action;
-        if (sigqueue(PID, SIGUSR1, value) == -1)
-        {
-            printf("Error with sigque, %d\n", errno);
-            return 1;
-        }
-        sigsuspend(&signals);
-    }
-    return 0;
 }

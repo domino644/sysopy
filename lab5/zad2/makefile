@@ -1,5 +1,5 @@
 CC=gcc
-FLAGS=-Wall -lc -lpthread -D_POSIX_C_SOURCE=199309L
+FLAGS=-Wall
 
 all:
 	$(CC) $(FLAGS) -o catcher catcher.c
