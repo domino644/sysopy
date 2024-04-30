@@ -10,12 +10,19 @@
 struct message {
     long type;
     char text[MAX_MESSAGE_SIZE];
+    int id;
 };
 
-struct client {
+typedef struct client {
     int queue_id;
     int client_id;
-};
+} Client;
+
+void print_clients(Client c[], int n) {
+    for (int i = 0; i < n; i++) {
+        printf("Client - ID: %d, QUEUE: %d\n", c[i].client_id, c[i].queue_id);
+    }
+}
 
 int main() {
     const char *path = "/tmp";
@@ -36,6 +43,7 @@ int main() {
             perror("Error receiving message from client\n");
             return 1;
         }
+        printf("ID: %d\n", msg.id);
         char *tok = strtok(msg.text, " ");
         if (strcmp(tok, "INIT") == 0) {
             if (n >= MAX_CLIENTS) {
@@ -61,10 +69,11 @@ int main() {
             clients[n].client_id = n + 1;
             clients[n].queue_id = client_queue;
             n++;
+            print_clients(clients, n);
         }
         else {
             for (int i = 0; i < n; i++) {
-                if (clients[i].client_id != msg.type) {
+                if (clients[i].client_id != msg.id) {
                     if (msgsnd(clients[i].queue_id, &msg, strlen(msg.text) + 1, 0) == -1) {
                         perror("Error sending message to user\n");
                         return 1;

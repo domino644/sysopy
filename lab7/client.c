@@ -10,7 +10,10 @@
 struct message {
     long type;
     char text[MAX_MESSAGE_SIZE];
+    int id;
 };
+
+int client_id;
 
 int main(int argc, char *argv[]) {
     if (argc < 2) {
@@ -58,9 +61,9 @@ int main(int argc, char *argv[]) {
         perror("Error converting ID to integer\n");
         return 1;
     }
-    int client_id = atoi(res.text);
+    client_id = atoi(res.text);
 
-    printf("I got initialized!\n");
+    printf("I got initialized with ID: %d!\n", client_id);
 
     pid_t PID = fork();
     if (PID == -1) {
@@ -69,24 +72,24 @@ int main(int argc, char *argv[]) {
     }
     if (PID == 0) {
         while (1) {
-            //sender - child
-            struct message msg;
-            if (msgrcv(client_queue, &msg, sizeof(msg.text), 0, 0) == -1) {
+            //receiver - child
+            struct message res;
+            if (msgrcv(client_queue, &res, sizeof(res.text), 0, 0) == -1) {
                 perror("Error receiving a message\n");
                 return 1;
             }
-            printf("Message: %s\n", msg.text);
+            printf("User %d: %s\n", res.id, res.text);
         }
     }
     else {
-        //receiver - parent
+        //sender - parent
         while (1) {
-            printf("Message to send: \n");
             struct message msg;
             fgets(msg.text, sizeof(msg.text), stdin);
-            msg.type = client_id;
+            msg.type = 1;
+            msg.id = client_id;
             if (msgsnd(server_queue, &msg, strlen(msg.text) + 1, 0) == -1) {
-                perror("Error send ing message\n");
+                perror("Error sending message\n");
                 return 1;
             }
         }
