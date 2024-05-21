@@ -88,7 +88,6 @@ void *reindeer_fun(void *arg) {
 int main() {
     srand(time(NULL));
 
-
     pthread_create(&santa_thread, NULL, santa_fun, NULL);
 
     for (int i = 0; i < REINDEERS; i++) {
